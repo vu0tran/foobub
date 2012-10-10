@@ -128,62 +128,60 @@ body {
 	</div>  -->
 
   </div>
+  <script src='http://code.jquery.com/jquery-1.8.2.min.js'></script>
+  <script>
+    var results = <?php echo $json ?>;
+    if(results.length == 0){
+      document.location.href = "http://www.google.com/search?q="+ '<?php echo $search ?>';
+    }
+    // var results = [{"website": "google", "high": 5, "results": [{"data": {"dispurl": "answers.google.com/answers/threadview/id/747703.html", "title": "Google Answers: <b>Network</b> <b>Solutions</b> Limited is <b>a scam</b> or real ...", "url": "http://answers.google.com/answers/threadview/id/747703.html", "abstract": "Subject: <b>Network</b> <b>Solutions</b> Limited is <b>a scam</b> or real company ??? Category: Business and Money &gt; eCommerce Asked by: agausling-ga List Price: $15.00", "clickurl": "http://answers.google.com/answers/threadview/id/747703.html", "date": ""}, "rank": 5}]}, {"website": "wikipedia", "high": 30, "results": [{"data": {"dispurl": "en.wikipedia.org/wiki/<b>Network</b>_<b>Solutions</b>", "title": "<b>Network</b> <b>Solutions</b> - Wikipedia, the free encyclopedia", "url": "http://en.wikipedia.org/wiki/Network_Solutions", "abstract": "In 1995, the domain sex.com was hijacked by Stephen M. Cohen through a lapse in <b>Network</b> <b>Solutions</b> security. A protracted and expensive lawsuit resulted as the <b>legitimate</b> ...", "clickurl": "http://en.wikipedia.org/wiki/Network_Solutions", "date": ""}, "rank": 30}, {"data": {"dispurl": "en.wikipedia.org/wiki/Domain_name_<b>scams</b>", "title": "Domain name scams - Wikipedia, the free encyclopedia", "url": "http://en.wikipedia.org/wiki/Domain_name_scams", "abstract": "In March 2008, PC News Digest reports \u201c<b>Network</b> <b>Solutions</b> <b>Scam</b>\u201d. When searching on the <b>Network</b> <b>Solutions</b> website to see if a name was available for registration ...", "clickurl": "http://en.wikipedia.org/wiki/Domain_name_scams", "date": ""}, "rank": 31}]}];
+
+    console.log(results);
+
+    for (i=0; i<results.length; i++){
+      var column = document.createElement('div');
+      column.className = 'result-col';
+      var logo = document.createElement('div');
+      logo.className = 'logo';
+      logo.style.background = "url('" +  results[i]['website'] + '.png' + "')";
+      
+      column.appendChild(logo);
+      for(j=0; j<results[i].results.length; j++){
+
+        (function(e){
+          var result = document.createElement('div');
+          result.className = 'result';
+          url = results[i].results[j].data.clickurl;
+          result.onclick = function(){document.location.href = e};
+
+          var header = document.createElement('div');
+          header.className = 'header';
+
+          var title = document.createElement('div');
+
+          title.className = 'title';
+          title.innerHTML = results[i].results[j].data.dispurl;
+			
+          var description = document.createElement('div');
+          description.className = 'description';
+          description.innerHTML = results[i].results[j].data.abstract;
+
+          header.appendChild(title);
+
+          result.appendChild(header);
+          result.appendChild(description);
+
+          column.appendChild(result);
+        })(results[i].results[j].data.clickurl)
+      }
+      
+      document.getElementById('container').appendChild(column);
+    }
+
+    console.log(results);
+    </script>
+
 
 </body>
 
 </html>
-<script src='http://code.jquery.com/jquery-1.8.2.min.js'></script>
-<script>
-var results = <?php echo $json ?>;
-if(results.length == 0){
-	document.location.href = "http://www.google.com/search?q="+ '<?php echo $search ?>';
-}
-// var results = [{"website": "google", "high": 5, "results": [{"data": {"dispurl": "answers.google.com/answers/threadview/id/747703.html", "title": "Google Answers: <b>Network</b> <b>Solutions</b> Limited is <b>a scam</b> or real ...", "url": "http://answers.google.com/answers/threadview/id/747703.html", "abstract": "Subject: <b>Network</b> <b>Solutions</b> Limited is <b>a scam</b> or real company ??? Category: Business and Money &gt; eCommerce Asked by: agausling-ga List Price: $15.00", "clickurl": "http://answers.google.com/answers/threadview/id/747703.html", "date": ""}, "rank": 5}]}, {"website": "wikipedia", "high": 30, "results": [{"data": {"dispurl": "en.wikipedia.org/wiki/<b>Network</b>_<b>Solutions</b>", "title": "<b>Network</b> <b>Solutions</b> - Wikipedia, the free encyclopedia", "url": "http://en.wikipedia.org/wiki/Network_Solutions", "abstract": "In 1995, the domain sex.com was hijacked by Stephen M. Cohen through a lapse in <b>Network</b> <b>Solutions</b> security. A protracted and expensive lawsuit resulted as the <b>legitimate</b> ...", "clickurl": "http://en.wikipedia.org/wiki/Network_Solutions", "date": ""}, "rank": 30}, {"data": {"dispurl": "en.wikipedia.org/wiki/Domain_name_<b>scams</b>", "title": "Domain name scams - Wikipedia, the free encyclopedia", "url": "http://en.wikipedia.org/wiki/Domain_name_scams", "abstract": "In March 2008, PC News Digest reports \u201c<b>Network</b> <b>Solutions</b> <b>Scam</b>\u201d. When searching on the <b>Network</b> <b>Solutions</b> website to see if a name was available for registration ...", "clickurl": "http://en.wikipedia.org/wiki/Domain_name_scams", "date": ""}, "rank": 31}]}];
-
-console.log(results);
-
-for (i=0; i<results.length; i++){
-	var column = document.createElement('div');
-	column.className = 'result-col';
-	var logo = document.createElement('div');
-	logo.className = 'logo';
-	logo.style.background = "url('" +  results[i]['website'] + '.png' + "')";
-
-	column.appendChild(logo);
-	for(j=0; j<results[i].results.length; j++){
-
-		(function(e){
-			var result = document.createElement('div');
-			result.className = 'result';
-			url = results[i].results[j].data.clickurl;
-			result.onclick = function(){document.location.href = e};
-
-			var header = document.createElement('div');
-			header.className = 'header';
-
-			var title = document.createElement('div');
-
-			title.className = 'title';
-			title.innerHTML = results[i].results[j].data.dispurl;
-			
-
-
-			var description = document.createElement('div');
-			description.className = 'description';
-			description.innerHTML = results[i].results[j].data.abstract;
-
-			header.appendChild(title);
-
-			result.appendChild(header);
-			result.appendChild(description);
-
-			column.appendChild(result);
-		})(results[i].results[j].data.clickurl)
-	}
-
-	document.getElementById('container').appendChild(column);
-}
-
-console.log(results);
-</script>
-
