@@ -86,7 +86,7 @@ body {
 <body>
  <div id='header-bar'>
  	<form name="input" action="." method="get">
- 	<input id='search' name='s'  placeholder='<?php echo urldecode($search) ?>' type='text'></input>
+ 	<input id='search' name='s'  placeholder="<?php echo htmlspecialchars(urldecode($search)) ?>" type='text'></input>
  </form>
  </div>
  
